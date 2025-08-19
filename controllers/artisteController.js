@@ -83,23 +83,23 @@ exports.updateArtiste = async (req, res) => {
       res.status(404).json({
         message: `Artiste with ID:${id} not found`,
       });
+    } else {
+      //Update the Artiste with the new data from the request body
+      const { name, gender, genre, is_Married, country, record_label } = req.body;
+      //Update the Artiste
+      const updatedArtiste = await Artiste.update({
+        name,
+        gender,
+        genre,
+        is_Married,
+        country,
+        record_label,
+      });
+      res.status(200).json({
+        message: `Artiste Updated Successfully`,
+        data: updatedArtiste,
+      });
     }
-    //Update the Artiste with the new data from the request body
-    const { name, gender, genre, is_Married, country, record_label } = req.body;
-    //Update the Artiste details
-    const updatedArtiste = await Artiste.update({
-      name,
-      gender,
-      genre,
-      is_Married,
-      country,
-      record_label,
-    });
-    //Send a success response
-    res.status(200).json({
-      message: `Artiste Updated Successfully`,
-      data: updatedArtiste,
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -119,11 +119,10 @@ exports.deleteOneArtiste = async (req, res) => {
       });
     }
     //Delete the Artiste
-    await Artiste.destroy(id);
-    //Send a success response
+    const deleteArtiste = await Artiste.destroy(id);
     res.status(200).json({
       message: `Artiste Deleted Successfully`,
-      data: Artiste,
+      data: deleteArtiste,
     });
   } catch (error) {
     res.status(500).json({
