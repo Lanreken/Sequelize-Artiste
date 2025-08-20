@@ -4,12 +4,12 @@ const artisteModel = require("../models/artiste");
 //POST: Create an artiste
 exports.createArtiste = async (req, res) => {
   try {
-    //check if a user already exists
-    if (artisteModel.findOne({ where: { name: req.body.name } })) {
-      return res.status(404).json({
-        message: `Artiste with name ${req.body.name} already exists`,
-      });
-    } else {
+    // //check if a user already exists
+    // if (artisteModel.findOne({ where: { name: req.body.name } })) {
+    //   return res.status(404).json({
+    //     message: `Artiste with name ${req.body.name} already exists`,
+    //   });
+    // }
       const { name, gender, genre, is_Married, country, record_label } = req.body;
 
       //Create a new Instance of the model and save to the database automatically
@@ -26,7 +26,7 @@ exports.createArtiste = async (req, res) => {
         message: `Created successfully`,
         data: newArtiste,
       });
-    }
+    
   } catch (error) {
     res.status(500).json({
       message: error.message,
